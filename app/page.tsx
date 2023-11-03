@@ -1,95 +1,56 @@
+"use client"
+import { useState } from "react";
 import Image from 'next/image'
+import { motion, AnimatePresence } from "framer-motion";
+import { IoMdArrowBack } from "react-icons/io";
+
 import styles from './page.module.css'
 
 export default function Home() {
+  const [ search, setSearch ] = useState(false);
+  const [ searchText, setSearchText ] = useState("");
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <AnimatePresence>
+      {!search && (
+      <motion.div  
+        className={styles.group} 
+        initial={{ height: search ? "auto" : 0, marginBottom: search ? 0 : "70px" }} 
+        animate={{ height: search ? 0 : "auto", marginBottom: search ? 0 : "70px" }} 
+        exit={{ height: 0, marginBottom: 0 }} >
+        <Image className={styles.logo} src="/logo.svg" width={150} height={100} alt="logo"></Image>
+        <h1 className={styles.title}>Poe Wiki Mobile</h1>
+      </motion.div>)}
+      </AnimatePresence>
+      <div className={styles.searchGroup}>
+          {search && (<button 
+            className={styles.searchBack} 
+            onClick={() => {
+              setSearch(false);
+              setSearchText("");
+            }}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+            <IoMdArrowBack size="100%" />
+          </button>)}
+        <input 
+          className={styles.search} 
+          placeholder="search..." 
+          onClick={() => setSearch(true)} 
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)} />
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <AnimatePresence>
+        {!search && (
+          <motion.button 
+            className={styles.browse} 
+            onClick={() => setSearch(false)}
+            initial={{ opacity: search ? 0 : 1 }}
+            animate={{ opacity: search ? 0: 1 }}
+            exit={{ opacity: 0 }}>
+              Browse Database
+          </motion.button>)}
+      </AnimatePresence>
     </main>
   )
 }
