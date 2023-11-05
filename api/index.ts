@@ -2,9 +2,18 @@ import axios from "axios";
 
 axios.defaults.baseURL = "https://www.poewiki.net/w/api.php";
 
-export const Search_Function = async (searchString: string) => {
+interface SearchResultType {
+  config: Record<string, any>
+  data: Array<string>[]
+  headers: Record<string, any>
+  request?: XMLHttpRequest
+  status: number
+  statusText: string
+}
+
+export const Search_Function = async (searchString: string): Promise<SearchResultType> => {
   try {
-    const result = await axios.get("", {
+    const result: SearchResultType = await axios.get("", {
       params: {
         origin: "*",
         action: "opensearch",
@@ -12,12 +21,16 @@ export const Search_Function = async (searchString: string) => {
         limit: 10,
         format: "json",
       },
-      headers: {
-        'User-Agent': 'PoeWikiMobileBot/0.1.0, dannytnguyen.dev@gmail.com',
-      },
     })
     return result;
   } catch (err) {
-    console.log(err)
+    console.log(err);
+    return {
+      config: {},
+      data: [],
+      headers: {},
+      status: -1,
+      statusText: ''
+    }
   }
 }

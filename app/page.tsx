@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from 'next/image'
 import { motion } from "framer-motion";
 import { IoMdArrowBack } from "react-icons/io";
@@ -21,20 +21,18 @@ const LogoVariants = {
 export default function Home() {
   const [ search, setSearch ] = useState(false);
   const [ searchText, setSearchText ] = useState("");
-  const [ req, setReq ] = useState(false);
+  const [ searchResults, setSearchResults ] = useState(['']);
 
-  const OnSearch = (search_value: string) => {
-    setSearchText(search_value);
-    console.log(searchText);
-    if (!req) {
-      setReq(true);
-      setTimeout(function () {
-        const result = Search_Function(search_value);
-        console.log(result);
-        setReq(false);
-      }, 2000);
-    }
-  }
+  useEffect(() => {
+      const SendSearch = setTimeout(async function () {
+          const result = await Search_Function(searchText);
+          setSearchResults(result.data[1])
+        }, 2000);
+
+    return () => clearTimeout(SendSearch)
+  }, [searchText])
+
+
 
   return (
     <main className={styles.main}>
@@ -53,6 +51,7 @@ export default function Home() {
             onClick={() => {
               setSearch(false);
               setSearchText("");
+              setSearchResults([''])
             }}
           >
             <IoMdArrowBack size="100%" />
@@ -62,8 +61,15 @@ export default function Home() {
           placeholder="search..." 
           onClick={() => setSearch(true)} 
           value={searchText}
-          onChange={(e) => OnSearch(e.target.value)} />
+          onChange={(e) => setSearchText(e.target.value)} />
       </div>
+      {searchResults && (
+        <div>{searchResults.map((o, i) => {
+          return (
+            <div key={i}>{o}</div>
+          )
+        })}</div>
+      )}
         <motion.button 
           className={styles.browse} 
           onClick={() => setSearch(false)}
