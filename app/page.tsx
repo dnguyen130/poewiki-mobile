@@ -1,28 +1,52 @@
 "use client"
 import { useState } from "react";
 import Image from 'next/image'
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { IoMdArrowBack } from "react-icons/io";
+import { Search_Function } from "@/api";
 
 import styles from './page.module.css'
+
+const LogoVariants = {
+  visible: {
+    height: "auto",
+    marginBottom: "70px"
+  },
+  hidden: {
+    height: 0,
+    marginBottom: 0
+  }
+}
 
 export default function Home() {
   const [ search, setSearch ] = useState(false);
   const [ searchText, setSearchText ] = useState("");
+  const [ req, setReq ] = useState(false);
+
+  const OnSearch = (search_value: string) => {
+    setSearchText(search_value);
+    console.log(searchText);
+    if (!req) {
+      setReq(true);
+      setTimeout(function () {
+        const result = Search_Function(search_value);
+        console.log(result);
+        setReq(false);
+      }, 2000);
+    }
+  }
 
   return (
     <main className={styles.main}>
-      <AnimatePresence>
-      {!search && (
       <motion.div  
-        className={styles.group} 
-        initial={{ height: search ? "auto" : 0, marginBottom: search ? 0 : "70px" }} 
-        animate={{ height: search ? 0 : "auto", marginBottom: search ? 0 : "70px" }} 
-        exit={{ height: 0, marginBottom: 0 }} >
-        <Image className={styles.logo} src="/logo.svg" width={150} height={100} alt="logo"></Image>
+      className={styles.group} 
+        variants={LogoVariants}
+        initial="visible"
+        animate={search ? "hidden" : "visible"}
+        exit="hidden" >
+        <Image className={styles.logo} src="/logo.svg" width={150} height={100} alt="logo" />
         <h1 className={styles.title}>Poe Wiki Mobile</h1>
-      </motion.div>)}
-      </AnimatePresence>
+      </motion.div>
       <div className={styles.searchGroup}>
           {search && (<button 
             className={styles.searchBack} 
@@ -38,19 +62,16 @@ export default function Home() {
           placeholder="search..." 
           onClick={() => setSearch(true)} 
           value={searchText}
-          onChange={(e) => setSearchText(e.target.value)} />
+          onChange={(e) => OnSearch(e.target.value)} />
       </div>
-      <AnimatePresence>
-        {!search && (
-          <motion.button 
-            className={styles.browse} 
-            onClick={() => setSearch(false)}
-            initial={{ opacity: search ? 0 : 1 }}
-            animate={{ opacity: search ? 0: 1 }}
-            exit={{ opacity: 0 }}>
-              Browse Database
-          </motion.button>)}
-      </AnimatePresence>
+        <motion.button 
+          className={styles.browse} 
+          onClick={() => setSearch(false)}
+          initial={{ opacity: search ? 0 : 1 }}
+          animate={{ opacity: search ? 0: 1 }}
+          exit={{ opacity: 0 }}>
+            Browse Database
+        </motion.button>
     </main>
   )
 }
