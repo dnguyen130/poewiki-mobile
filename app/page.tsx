@@ -67,15 +67,17 @@ export default function Home() {
         onInputBlur={() => setSearchFocus(false)}
         searchFocus={searchFocus}
       />
-      <motion.button
-        className={styles.browse}
-        onClick={search ? () => {} : () => setSearch(false)}
-        initial={{ opacity: search ? 0 : 1 }}
-        animate={{ opacity: search ? 0 : 1 }}
-        exit={{ opacity: 0 }}
-      >
-        Browse Database
-      </motion.button>
+      {!search && (
+        <motion.button
+          className={styles.browse}
+          onClick={search ? () => {} : () => setSearch(false)}
+          initial={{ opacity: search ? 0 : 1 }}
+          animate={{ opacity: search ? 0 : 1 }}
+          exit={{ opacity: 0 }}
+        >
+          Browse Database
+        </motion.button>
+      )}
     </main>
   )
 }
