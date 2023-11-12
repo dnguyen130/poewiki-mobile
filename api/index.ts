@@ -20,6 +20,7 @@ export const Search_Function = async (searchString: string): Promise<SearchResul
         search: searchString,
         limit: 10,
         format: "json",
+        namespace: 0
       },
     })
     return result;

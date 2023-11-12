@@ -24,25 +24,7 @@
   height: 150px;
 }
 
-.searchGroup {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.searchBack {
-  overflow: hidden;
-  width: 50px;
-  margin-right: 5px;
-}
-
-.search {
-  width: 100%;
-  max-width: 300px;
-  padding: 10px;
-}
-
-.browse { 
+.browse {
   margin-top: 70px;
   padding: 10px;
   width: 150px;

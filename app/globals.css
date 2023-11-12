@@ -2,16 +2,16 @@
   --max-width: 1100px;
   --border-radius: 12px;
 
-  --foreground-hex: #0B0400;
-  --background-start-hex: #F3F3F3;
+  --foreground-hex: #0b0400;
+  --background-start-hex: #f3f3f3;
   --background-end-hex: #525252;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-hex: #F3F3F3;
-    --background-start-hex: #41403F;
-    --background-end-hex: #0B0400;
+    --foreground-hex: #f3f3f3;
+    --background-start-hex: #0b0400;
+    --background-end-hex: #41403f;
   }
 }
 
@@ -35,11 +35,11 @@ body {
   min-height: 100vh;
   color: rgb(var(--foreground-hex));
   background: linear-gradient(
-      135deg,
-      var(--background-start-hex),
-      50%,
-      var(--background-end-hex)
-    );
+    135deg,
+    var(--background-start-hex),
+    50%,
+    var(--background-end-hex)
+  );
   display: flex;
   flex-direction: column;
   justify-content: center;

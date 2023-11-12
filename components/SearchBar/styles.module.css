@@ -1,0 +1,38 @@
+.searchGroup {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  justify-content: center;
+}
+
+.searchBack {
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+}
+
+.search {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+}
+
+.resultsCont {
+  background-color: var(--background-start-hex);
+  color: var(--foreground-hex);
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  margin-top: 3px;
+}
+
+.resultsLine:first-child,
+.resultsLine:last-child {
+  margin: 0;
+}
+
+.resultsLine {
+  margin: 10px 0;
+}
